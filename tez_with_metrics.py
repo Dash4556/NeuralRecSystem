@@ -1,4 +1,9 @@
-# Creating the class for the model
+import tez
+import torch
+from torch import nn
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader
+
 class YourTezModel(tez.Model):
     # Setting the default function ('__init__') which takes in the user count/song count
     def __init__(self, user_count, song_count):
