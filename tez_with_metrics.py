@@ -134,3 +134,82 @@ for epoch in range(num_epochs):
 
     # Print metrics after each epoch
     print(f'Epoch {epoch + 1}/{num_epochs}, Validation Metrics: {val_metrics}')
+
+
+
+
+# ---------------------------
+# Getting the metrics on three optinmizers (Adam, SGD, RMSprop) and three Learning Rate Values:
+# import itertools
+
+# # Define hyperparameters to search
+# optimizers = ['Adam', 'SGD', 'RMSprop']
+# learning_rates = [0.0005, 0.001, 0.0015]
+
+# # Combined grid search
+# num_epochs_per_combination = 1
+
+# for optimizer_name, lr in itertools.product(optimizers, learning_rates):
+#     print(f'Learning Rate: {lr}, Optimizer: {optimizer_name}')
+
+#     # Set optimizer based on the current iteration
+#     if optimizer_name == 'Adam':
+#         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+#     elif optimizer_name == 'SGD':
+#         optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+#     elif optimizer_name == 'RMSprop':
+#         optimizer = torch.optim.RMSprop(model.parameters(), lr=lr)
+
+#     # Training loop
+#     num_epochs = num_epochs_per_combination
+#     model = YourTezModel(user_count, song_count).to(device)
+
+#     for epoch in range(num_epochs):
+#         model.train()
+#         train_loss = 0.0  # Variable to accumulate training loss
+
+#         for batch in train_loader:
+#             # Training steps...
+#             features, target = batch
+#             user_ids = features['user_id'].to(device)
+#             song_ids = features['song_id'].to(device)
+#             target = target.to(device, dtype=torch.float32)
+
+#             # Forward pass
+#             output_tuple, loss = model((user_ids, song_ids), target)
+
+#             # Backward pass and optimization
+#             optimizer.zero_grad()
+#             loss.backward()
+#             optimizer.step()
+
+#             train_loss += loss.item()
+
+#         # Validation after each epoch
+#         model.eval()
+#         val_metrics = {'rmse': 0.0, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0}
+#         num_val_batches = len(valid_loader)
+
+#         with torch.no_grad():
+#             for batch in valid_loader:
+#                 # Validation steps...
+#                 val_features, val_target = batch
+#                 val_user_ids = val_features['user_id'].to(device)
+#                 val_song_ids = val_features['song_id'].to(device)
+
+#                 val_output_tuple, val_loss = model((val_user_ids, val_song_ids), val_target)
+
+#                 val_metrics_batch = model.monitor_metrics(val_output_tuple[0], val_target)
+#                 for key in val_metrics.keys():
+#                     val_metrics[key] += val_metrics_batch[key]
+
+#         # Calculate average training loss and validation metrics
+#         avg_train_loss = train_loss / len(train_loader)
+#         for key in val_metrics.keys():
+#             val_metrics[key] /= num_val_batches
+
+#         # Print metrics after each epoch for the current learning rate and optimizer
+#         print(f'Epoch {epoch + 1}/{num_epochs}, Avg Train Loss: {avg_train_loss}, Validation Metrics: {val_metrics}')
+
+#     # Add a newline for better readability
+#     print('\n')
