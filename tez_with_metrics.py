@@ -21,7 +21,7 @@ class YourTezModel(tez.Model):
             nn.Linear(in_features=input_size, out_features=64),
             nn.ReLU(),
             nn.Linear(in_features=64, out_features=1)
-        )
+        ) 
 
         # Define the loss function (Mean Squared Error) and optimizer (Adam)
         self.loss_fn = torch.nn.MSELoss()
